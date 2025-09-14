@@ -134,6 +134,32 @@ keywords = {Pulmonary tree labeling, Graph, Point cloud, Implicit function, 3D d
 }
 ```
 
+## Airway Tree Analysis Pipeline
+
+This repository now includes a comprehensive airway tree centerline analysis pipeline with proper coordinate handling:
+
+### Key Modules:
+- `coordinate_utils.py` - Core coordinate transformation utilities
+- `detect_tree.py` - Tree detection and construction algorithms  
+- `airway_area_utils.py` - BFS labeling and bifurcation angle analysis
+- `break_by_gen.py` - Example usage script
+
+### Usage Example:
+```bash
+# Analyze airway tree from NIfTI segmentation
+python break_by_gen.py path/to/airway_segmentation.nii.gz --output_dir results/
+
+# Run validation tests
+python tests/test_coordinate_pipeline.py
+```
+
+### Features:
+- Proper voxel-to-world coordinate conversion using NIfTI affine matrices
+- Fixed BFS labeling (eliminates -2 offset bug)
+- World-space bifurcation angle calculation
+- Left/right lung assignment based on anatomical orientation
+- Regularized tree construction with MST/Prim algorithm
+
 ## Acknowledgement
 
 Some of our code is modified based on [Pointnet++](https://github.com/charlesq34/pointnet2) and we greatly appreciate the efforts of the respective authors for providing open-source code. 
