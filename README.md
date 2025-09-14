@@ -3,6 +3,50 @@
 
 Preprint: [arXiv:2309](https://arxiv.org/abs/2309.17329)
 
+## 🔄 Coordinate System Refactor
+
+This repository now includes a comprehensive coordinate system refactor that addresses spatial positioning and geometric calculation issues in pulmonary tree analysis. The refactor provides:
+
+### Key Features
+- **Unified coordinate handling**: Consistent (i,j,k) = (x_index, y_index, z_index) mapping
+- **Proper spacing management**: spacing = (sx, sy, sz) aligned with array axes
+- **NIfTI affine support**: World coordinate transformations with proper affine matrices
+- **Physical distance calculations**: All measurements use real-world units
+- **Isotropic skeletonization**: Optional resampling to avoid anisotropic distortion
+
+### New Modules
+- `coordinate_utils.py`: Core coordinate transformation and NIfTI handling utilities
+- `detect_tree.py`: Tree detection with proper coordinate system handling
+- `airway_area_utils.py`: Unified angle calculations and airway analysis
+- `main_lable.py`: Integration script demonstrating the complete pipeline
+- `test_coordinate_refactor.py`: Validation tests for coordinate consistency
+
+### Usage Example
+```python
+from coordinate_utils import load_nifti
+from detect_tree import tree_detection
+from airway_area_utils import calculate_bifurcation_angles
+
+# Load segmentation with proper coordinate handling
+data, affine, spacing = load_nifti('segmentation.nii.gz')
+
+# Detect tree structure with physical distance calculations
+tree_result = tree_detection(data, spacing)
+
+# Calculate bifurcation angles in physical space
+angles = calculate_bifurcation_angles(tree_result)
+```
+
+### Running the New Pipeline
+```bash
+python main_lable.py --input_dir /path/to/segmentations --output_dir ./results
+```
+
+### Testing
+```bash
+python test_coordinate_refactor.py
+```
+
 
 ## :bookmark_tabs:Data Preparation
 
